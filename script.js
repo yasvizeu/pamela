@@ -9,46 +9,66 @@ const WEEKS = [
     focus: "Aprender a estrutura de frases de ser/estar na afirmativa. Não se preocupe com perfeição — ouse falar!",
 
     pdfs: [
-      { label: "To Be – Semana 1", url: "https://drive.google.com/file/d/1SnUMZtZB3wKpt1L5aEqlnw9WzN306I_p/view?usp=drivesdk" }
+      { label: "To Be – Semana 1", url: "https://drive.google.com/file/d/1Sy2vF5MsjdcpRLBHGqVCNOPtS8N5dBYf/view?usp=sharing" }
     ],
 
     exercises: [
-      "Leia o pdf para revisão",
+      "Pratique os exercícios do PDF abaixo",
       "Escreva 3 frases apresentando você em inglês no seu caderno"
     ],
 
     // Com arquivo:   { label: "Nome", url: "audios/arquivo.mp3" }
     // Pelo WhatsApp: { label: "Nome — enviado pelo WhatsApp", url: "" }
     audios: [
-      { label: "Pronúncia de 'th' ", url: "" }
+      { label: "Pronúncia de 'th' — enviado pelo WhatsApp", url: "" }
     ],
 
     links: [
       { label: "BBC Learning English – greetings", url: "https://www.bbc.co.uk/learningenglish" }
     ],
 
-    videos: []
+    videos: [],
+
+    // ✏️ ADICIONE VOCABULÁRIO AQUI
+    // { word: "palavra em inglês", translation: "tradução em português" }
+    vocabulary: [
+      { word: "to be", translation: "ser / estar" },
+      { word: "I am", translation: "eu sou / estou" },
+      { word: "you are", translation: "você é / está ou vocês são/estão" },
+      { word: "she is", translation: "ela é / está" },
+      { word: "we are", translation: "nós somos / estamos" },
+      { word: "they are", translation: "eles são / estão" },
+      { word: "here", translation: "aqui" },
+      { word: "hungry", translation: "fome" },
+    ]
   },
 
   {
     number: 2,
-    title: "Questions using To Be and Introductions",
-    focus: "Praticar frases simples usando o to be como interrogativo e se apresentar",
+    title: "Daily Routines",
+    focus: "Praticar frases simples sobre rotina e começar a falar pequenas informações do dia a dia.",
 
     pdfs: [],
 
     exercises: [
       "Complete os exercícios da Semana 2 no caderno",
-      "Grave um áudio curto falando 3 frases sobre você - me mande no WhatsApp",
-      "Escreva 3 frases com o To Be e depois transforme-as em interrogativas"
+      "Grave um áudio curto falando 3 frases sobre sua rotina"
     ],
 
-    audios: [ ],
-
-    links: [
-        {label: "Interrogativas com To Be", url:"https://inglespratico.com.br/verbo-to-be-interrogativa/"}
+    audios: [
+      { label: "Modelo de rotina — enviado pelo WhatsApp", url: "" }
     ],
-    videos: []
+
+    links: [],
+    videos: [],
+
+    vocabulary: [
+      { word: "wake up", translation: "acordar" },
+      { word: "daily routine", translation: "rotina diária" },
+      { word: "in the morning", translation: "de manhã" },
+      { word: "at night", translation: "à noite" },
+      { word: "in the afternoon", translation: "à tarde" },
+    ]
   }
 
   // ============================================================
@@ -63,7 +83,10 @@ const WEEKS = [
   //   exercises: ["Faça os exercícios do PDF", "Grave 3 frases sobre sua família"],
   //   audios:    [],
   //   links:     [],
-  //   videos:    []
+  //   videos:    [],
+  //   vocabulary: [
+  //     { word: "palavra", translation: "tradução" },
+  //   ]
   // }
   // ============================================================
 ];
@@ -117,11 +140,35 @@ function openModal(index) {
     renderAudios(w.audios),
     renderLinks(w.links),
     renderVideos(w.videos),
+    renderVocabulary(w.vocabulary),
     `<div class="yas-tip"><strong>Dica da YV</strong>Pratique todos os dias um pouco. Consistência é o que te leva à fluência. ✦</div>`
   ].join('');
 
   document.getElementById("overlay").classList.add("open");
   document.body.style.overflow = 'hidden';
+}
+
+
+function renderVocabulary(vocabulary) {
+  const items = (vocabulary || []).filter(v => v.word);
+  if (!items.length) return '';
+  return `
+    <div class="resource-section">
+      <h3 class="res-title">Vocabulário</h3>
+      <div class="vocab-grid">
+        ${items.map((v, i) => `
+          <div class="vocab-card" onclick="this.classList.toggle('flipped')" tabindex="0"
+               onkeydown="if(event.key==='Enter')this.classList.toggle('flipped')">
+            <div class="vocab-front">
+              <span class="vocab-word">${v.word}</span>
+              <span class="vocab-hint">toque para ver</span>
+            </div>
+            <div class="vocab-back">
+              <span class="vocab-translation">${v.translation}</span>
+            </div>
+          </div>`).join('')}
+      </div>
+    </div>`;
 }
 
 function closeModal() {
@@ -239,3 +286,28 @@ document.addEventListener("touchmove", e => {
 }, { passive: true });
 
 renderGrid();
+renderGlossary();
+
+function renderGlossary() {
+  const section = document.getElementById("glossarySection");
+  if (!section) return;
+
+  const all = [];
+  WEEKS.forEach(w => {
+    (w.vocabulary || []).filter(v => v.word).forEach(v => {
+      all.push({ ...v, week: w.number, weekTitle: w.title });
+    });
+  });
+
+  if (!all.length) {
+    section.innerHTML = '<p class="glossary-empty">O glossário vai aparecer aqui conforme as semanas forem avançando. ✦</p>';
+    return;
+  }
+
+  section.innerHTML = all.map(v => `
+    <div class="glossary-row">
+      <span class="glos-word">${v.word}</span>
+      <span class="glos-trans">${v.translation}</span>
+      <span class="glos-week-badge">Sem. ${v.week}</span>
+    </div>`).join('');
+}
