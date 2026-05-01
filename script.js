@@ -2,7 +2,7 @@ const PLAN = document.body.getAttribute("data-plan") || "Foundation";
 
 const DAILY = {
   date: "1 de maio, 2026",
-  text: "Pamela is a mother. She is Brazilian and she is 39 years old. Her son Pedro is 3 years old and her daughter Lis is 7. Pedro is home today, but Lis is at school. Yasmin is Pamela's English teacher. She is amazing! Pamela and Yasmin are studying together. They are friends.",
+  text: "Pamela is a mother. She is Brazilian and she is 39 years old. Her son Pedro is 3 years old. Pedro is home today. Yasmin is Pamela's English teacher. Pamela and Yasmin are studying together. They are friends.",
   questions: [
     {
       question: "How old is Pamela?",
