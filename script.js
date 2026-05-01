@@ -16,15 +16,15 @@ const DAILY = {
       answer: "b"
     },
     {
-      question: "Where is Lis?",
+      question: "Where is Pedro?",
       options: [
-        { letter: "a", text: "She is home" },
-        { letter: "b", text: "She is at the park" },
-        { letter: "c", text: "She is at school" },
-        { letter: "d", text: "She is at work" },
-        { letter: "e", text: "She is with Pedro" }
+        { letter: "a", text: "He is home" },
+        { letter: "b", text: "He is at the park" },
+        { letter: "c", text: "he is at school" },
+        { letter: "d", text: "He is at work" },
+        { letter: "e", text: "He is with his father" }
       ],
-      answer: "c"
+      answer: "a"
     },
     {
       question: "Who is Yasmin?",
